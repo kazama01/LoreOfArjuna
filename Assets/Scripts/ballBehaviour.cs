@@ -53,6 +53,10 @@ public class ballBehaviour : MonoBehaviour
             _rigidbody.AddForce(ballForce, ForceMode2D.Impulse);
             //Debug.Log(_rigidbody.velocity.magnitude);
         }
+        else if(collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<Enemy>().Damaged((int)totalATK);
+        }
     }
    
    
