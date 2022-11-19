@@ -11,13 +11,15 @@ public class ballBehaviour : MonoBehaviour
     [SerializeField] private float increment;
     private playerBehaviour playerBehaviour;
     private float tes;
-  
+    public ParticleSystem _particleSystem;
+
     void Start()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();
         _rigidbody.AddForce(ballForce, ForceMode2D.Impulse);
        // _rigidbody.gravityScale = 0;
-        
+      _particleSystem = GetComponentInChildren<ParticleSystem>();
+
 
     }
     private void FixedUpdate()
@@ -44,6 +46,7 @@ public class ballBehaviour : MonoBehaviour
             increment++;
             bounceCount++;
             totalATK += bounceCount;
+            _particleSystem.Play();
             //Debug.Log(totalATK += bounceCount + _rigidbody.velocity.magnitude);
             //Debug.Log(_rigidbody.velocity.magnitude);
         } 
@@ -56,6 +59,13 @@ public class ballBehaviour : MonoBehaviour
         else if(collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.GetComponent<Enemy>().Damaged((int)totalATK);
+        }
+
+
+
+        if (collision.gameObject.GetComponentInChildren<ParticleSystem>())
+        {
+
         }
     }
    

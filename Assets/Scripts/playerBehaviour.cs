@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
+
 public class playerBehaviour : MonoBehaviour
 {
 
@@ -11,9 +11,9 @@ public class playerBehaviour : MonoBehaviour
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         point.z = gameObject.transform.position.z;
 
-        Debug.Log(point);
+        //Debug.Log(point);
 
-        if(point.y <= 9 && point.y >= 5 && point.x >= -1.5f && point.x <= 1.5f)
+        if(point.y <= 9 && point.y >= 5 && point.x >= -1.8f && point.x <= 1.8f)
         {
             gameObject.transform.position = point;
         }
