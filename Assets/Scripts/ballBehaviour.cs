@@ -7,16 +7,18 @@ public class ballBehaviour : MonoBehaviour
     [SerializeField] private float bounceCount;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private float totalATK;
-    [SerializeField] private Vector3 ballForce;
+    [SerializeField] private Vector3 ballForceUp;
+    [SerializeField] private Vector3 ballForceDown;
     [SerializeField] private float increment;
     private playerBehaviour playerBehaviour;
     private float tes;
+    
     public ParticleSystem _particleSystem;
 
     void Start()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        _rigidbody.AddForce(ballForce, ForceMode2D.Impulse);
+        _rigidbody.AddForce(ballForceUp, ForceMode2D.Impulse);
        // _rigidbody.gravityScale = 0;
       _particleSystem = GetComponentInChildren<ParticleSystem>();
 
@@ -47,29 +49,25 @@ public class ballBehaviour : MonoBehaviour
             bounceCount++;
             totalATK += bounceCount;
             _particleSystem.Play();
-            //Debug.Log(totalATK += bounceCount + _rigidbody.velocity.magnitude);
+            //_rigidbody.AddForce(ballForce, ForceMode2D.Impulse);
             //Debug.Log(_rigidbody.velocity.magnitude);
         } 
         else if(collision.gameObject.tag == "Player"){
             //ballForce = _rigidbody.velocity;
             //_rigidbody.velocity = ballForce * ;
-            _rigidbody.AddForce(ballForce, ForceMode2D.Impulse);
+            _rigidbody.AddForce(ballForceUp, ForceMode2D.Impulse);
             //Debug.Log(_rigidbody.velocity.magnitude);
         }
         else if(collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.GetComponent<Enemy>().Damaged((int)totalATK);
-        }
-
-
-
-        if (collision.gameObject.GetComponentInChildren<ParticleSystem>())
-        {
+            _rigidbody.AddForce(ballForceDown, ForceMode2D.Impulse);
 
         }
+
+
+
+      
     }
-   
-   
-        
-    
 }
+   

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class playerBehaviour : MonoBehaviour
 {
-
+    public float healthBar = 3;
     void OnMouseDrag()
     {
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -13,11 +13,11 @@ public class playerBehaviour : MonoBehaviour
 
         //Debug.Log(point);
 
-        if(point.y <= 9 && point.y >= 5 && point.x >= -1.8f && point.x <= 1.8f)
+        if (point.y <= 9 && point.y >= 5 && point.x >= -1.8f && point.x <= 1.8f)
         {
             gameObject.transform.position = point;
         }
-        
+
         //Cursor.visible = false;
     }
 
@@ -25,5 +25,22 @@ public class playerBehaviour : MonoBehaviour
     {
         Cursor.visible = true;
     }
-}
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponentInChildren<ParticleSystem>())
+        {
+            if (healthBar != 0)
+            {
+                healthBar--;
+            }
+            else
+            {
+                Debug.Log("gameover");
+            }
+        }
+
+
+    }
+
+}
