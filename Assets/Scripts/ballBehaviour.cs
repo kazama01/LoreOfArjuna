@@ -45,12 +45,13 @@ public class ballBehaviour : MonoBehaviour
             bounceCount++;
             totalATK += bounceCount;
             //Debug.Log(totalATK += bounceCount + _rigidbody.velocity.magnitude);
-            Debug.Log(_rigidbody.velocity.magnitude);
-        } else if(collision.gameObject.tag == "Player"){
+            //Debug.Log(_rigidbody.velocity.magnitude);
+        } 
+        else if(collision.gameObject.tag == "Player"){
             //ballForce = _rigidbody.velocity;
             //_rigidbody.velocity = ballForce * ;
             _rigidbody.AddForce(ballForce, ForceMode2D.Impulse);
-            Debug.Log(_rigidbody.velocity.magnitude);
+            //Debug.Log(_rigidbody.velocity.magnitude);
         }
     }
    
