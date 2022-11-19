@@ -12,10 +12,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float projectileSpeed;
     public GameObject projectile;
 
-    public float idleTimer;
-    float _idleTimer;
+    [SerializeField] private float idleTimer;
+    [SerializeField] private float _idleTimer;
+
+    [SerializeField] private int stepLimit;
+    [SerializeField] private int _stepCount;
+    [SerializeField] private int shootStepLimit;
+    [SerializeField] private int _shootStepCount;
+    [SerializeField] private bool resetStep;
+    [SerializeField] private bool isRight;
 
     [SerializeField] private GameObject posTarget;
+    float tempPos;
 
     enum Status
     {
@@ -41,7 +49,9 @@ public class Enemy : MonoBehaviour
 
         _currentHP = MaxHP;
 
-        
+        _shootStepCount = shootStepLimit;
+
+        tempPos = posTarget.GetComponent<RectTransform>().anchoredPosition.y;
     }
 
     private void Update()
@@ -100,17 +110,69 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject projClone;
+        Debug.Log(posTarget.transform.position);
+        float randomY = Random.Range(-25, 25);
 
-        projClone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation);
-        projClone.transform.localScale = projClone.transform.localScale * 0.05f;
+        if(_stepCount == stepLimit)
+        {
 
-        projClone.GetComponent<Rigidbody2D>().AddForce(Vector2.down * projectileSpeed);
-        Destroy(projClone, 5f);
+            resetStep = true;
+            
+            _stepCount = 0;
+            _shootStepCount = shootStepLimit;
+        }
+        if(_shootStepCount == 0)
+        {
+            resetStep = false;
+            _stepCount = 0;
+            _shootStepCount = shootStepLimit;
+        }
 
-        posTarget.transform.position = new Vector3(posTarget.transform.position.x * -1, posTarget.transform.position.y, posTarget.transform.position.z);
+        if(posTarget.GetComponent<RectTransform>().anchoredPosition.x <= -300)
+        {
+            isRight = true;
+        }
+        if(posTarget.GetComponent<RectTransform>().anchoredPosition.x >= 300)
+        {
+            isRight = false;
+        }
 
-        state = State.Idle;
+        if(resetStep)
+        {
+            GameObject projClone;
+
+            projClone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation);
+            projClone.transform.localScale = projClone.transform.localScale * 0.05f;
+
+            projClone.GetComponent<Rigidbody2D>().AddForce(Vector2.down * projectileSpeed);
+            Destroy(projClone, 5f);
+
+            if (isRight)
+            {
+                posTarget.GetComponent<RectTransform>().anchoredPosition = new Vector2(posTarget.GetComponent<RectTransform>().anchoredPosition.x + 150, tempPos + randomY);
+            }
+            else if (!isRight)
+            {
+                posTarget.GetComponent<RectTransform>().anchoredPosition = new Vector2(posTarget.GetComponent<RectTransform>().anchoredPosition.x - 150, tempPos + randomY);
+            }
+
+            _shootStepCount--;
+            state = State.Idle;
+            _idleTimer = 0.0000025f;
+        }
+        else if(!resetStep)
+        {
+            _stepCount++;
+
+            posTarget.GetComponent<RectTransform>().anchoredPosition = new Vector2(posTarget.GetComponent<RectTransform>().anchoredPosition.x * -1, tempPos + randomY);
+
+            state = State.Idle;
+            _idleTimer = 1f;
+        }
+
+        Debug.Log(posTarget.transform.position);
+
+        
     }
 
     private void Die()
