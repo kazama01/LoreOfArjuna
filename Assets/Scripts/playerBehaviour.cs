@@ -14,13 +14,17 @@ public class PlayerBehaviour : MonoBehaviour
 
     [SerializeField] private Animator animVignette;
     private Animator anim;
-
+    public AudioSource audioSource;
+    public AudioSource audioSourceHit;
+    [SerializeField] AudioSource playerLose;
+    public Enemy enemy;
 
     private void Start()
     {
         _currentHP = MaxHP;
 
         anim = gameObject.GetComponent<Animator>();
+        
     }
 
     void OnMouseDrag()
@@ -51,6 +55,8 @@ public class PlayerBehaviour : MonoBehaviour
 
             Destroy(collision.gameObject);
 
+            audioSource.Play();
+            audioSourceHit.Play();
             _currentHP--;
 
             if(_currentHP == 3)
@@ -71,11 +77,13 @@ public class PlayerBehaviour : MonoBehaviour
                 hP_2.SetActive(false);
                 hP_3.SetActive(false);
             }
-            else if (_currentHP <= 0)
+            else if (_currentHP == 0)
             {
                 hP_1.SetActive(false);
                 hP_2.SetActive(false);
                 hP_3.SetActive(false);
+                playerLose.Play();
+                enemy.stageBGM.Stop();   
             }
         }
 

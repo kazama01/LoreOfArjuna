@@ -12,6 +12,7 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private float increment;
     private PlayerBehaviour playerBehaviour;
     private float tes;
+    [SerializeField] AudioSource audioSource;
     
     public ParticleSystem _particleSystem;
 
@@ -63,6 +64,7 @@ public class BallBehaviour : MonoBehaviour
             collision.gameObject.GetComponent<Enemy>().Damaged((int)totalATK);
             _rigidbody.AddForce(ballForceDown, ForceMode2D.Impulse);
             bounceCount = 1;
+            audioSource.Play();
         }    
     }
 }

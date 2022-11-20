@@ -21,9 +21,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _shootStepCount;
     [SerializeField] private bool resetStep;
     [SerializeField] private bool isRight;
-
+    [SerializeField] AudioSource audioSource;
     [SerializeField] private GameObject posTarget;
+    [SerializeField] private AudioSource playerWin;
+    [SerializeField] public AudioSource stageBGM;
     float tempPos;
+    
 
     [SerializeField] private Image HPBar;
 
@@ -58,6 +61,7 @@ public class Enemy : MonoBehaviour
         tempPos = posTarget.GetComponent<RectTransform>().anchoredPosition.y;
 
         anim = gameObject.GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -181,9 +185,11 @@ public class Enemy : MonoBehaviour
         
     }
 
-    private void Die()
+    public void Die()
     {
         //GameOver
+        stageBGM.Stop();
+        
     }
 
     public void Damaged(int inputDamage)
@@ -194,7 +200,12 @@ public class Enemy : MonoBehaviour
 
         HPBar.fillAmount = ((100f / MaxHP) * _currentHP) / 100;
         Debug.Log(HPBar.fillAmount);
+        if(_currentHP <= 0)
+        {
+            playerWin.Play();
+        }
 
         anim.Play("EnemyDamaged");
+        audioSource.Play();
     }    
 }
