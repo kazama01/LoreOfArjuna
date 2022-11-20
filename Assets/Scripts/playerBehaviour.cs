@@ -29,6 +29,7 @@ public class PlayerBehaviour : MonoBehaviour
         
     }
 
+    
     void OnMouseDrag()
     {
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -81,14 +82,14 @@ public class PlayerBehaviour : MonoBehaviour
             }
             else if (_currentHP == 0)
             {
+                
                 hP_1.SetActive(false);
                 hP_2.SetActive(false);
                 hP_3.SetActive(false);
                 playerLose.Play();
                 enemy.stageBGM.Stop();
                 _Lose.enabled = true;
-                Time.timeScale = 0;
-                  
+               
             }
         }
 

@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] public AudioSource stageBGM;
     float tempPos;
     [SerializeField] private Image Win;
+    [SerializeField] private GameObject _ball;
     
 
     [SerializeField] private Image HPBar;
@@ -91,6 +92,7 @@ public class Enemy : MonoBehaviour
         {
             state = State.Die;
             Win.enabled = true;
+            _ball.SetActive(false);
         }
     }
 

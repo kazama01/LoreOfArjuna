@@ -28,7 +28,7 @@ public class gameDescription : MonoBehaviour
         else if (_gameDes.GetComponent<Image>().enabled == false)
         {
             _ball.SetActive(true);
-            Debug.Log("tes");
+            //Debug.Log("tes");
             Time.timeScale = 1;
         }
     }
