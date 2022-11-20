@@ -20,6 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] AudioSource playerLose;
     public Enemy enemy;
     [SerializeField] Image _Lose;
+    [SerializeField] GameObject panel;
 
     private void Start()
     {
@@ -86,10 +87,13 @@ public class PlayerBehaviour : MonoBehaviour
                 hP_1.SetActive(false);
                 hP_2.SetActive(false);
                 hP_3.SetActive(false);
+
                 playerLose.Play();
                 enemy.stageBGM.Stop();
                 _Lose.enabled = true;
-               
+                panel.SetActive(true);
+
+                Destroy(this.gameObject);
             }
         }
 

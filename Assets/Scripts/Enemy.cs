@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     float tempPos;
     [SerializeField] private Image Win;
     [SerializeField] private GameObject _ball;
-    
+    [SerializeField] GameObject panel;
 
     [SerializeField] private Image HPBar;
 
@@ -91,6 +91,8 @@ public class Enemy : MonoBehaviour
         if (_currentHP <= 0)
         {
             state = State.Die;
+
+            panel.SetActive(true);
             Win.enabled = true;
             _ball.SetActive(false);
         }
@@ -193,7 +195,8 @@ public class Enemy : MonoBehaviour
     {
         //GameOver
         stageBGM.Stop();
-        Time.timeScale = 0;
+
+        Destroy(this.gameObject);
     }
 
     public void Damaged(int inputDamage)
