@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log(posTarget.transform.position);
+        //Debug.Log(posTarget.transform.position);
         float randomY = Random.Range(-25, 25);
 
         if(_stepCount == stepLimit)
