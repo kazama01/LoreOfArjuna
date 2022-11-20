@@ -23,11 +23,13 @@ public class gameDescription : MonoBehaviour
         if (_gameDes.GetComponent<Image>().enabled == true)
         {
             _ball.SetActive(false);
+            Time.timeScale = 0;
         }
         else if (_gameDes.GetComponent<Image>().enabled == false)
         {
             _ball.SetActive(true);
             Debug.Log("tes");
+            Time.timeScale = 1;
         }
     }
 
