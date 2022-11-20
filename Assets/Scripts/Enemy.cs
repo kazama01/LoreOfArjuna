@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioSource playerWin;
     [SerializeField] public AudioSource stageBGM;
     float tempPos;
+    [SerializeField] private Image Win;
     
 
     [SerializeField] private Image HPBar;
@@ -89,6 +90,7 @@ public class Enemy : MonoBehaviour
         if (_currentHP <= 0)
         {
             state = State.Die;
+            Win.enabled = true;
         }
     }
 
@@ -189,7 +191,7 @@ public class Enemy : MonoBehaviour
     {
         //GameOver
         stageBGM.Stop();
-        
+        Time.timeScale = 0;
     }
 
     public void Damaged(int inputDamage)

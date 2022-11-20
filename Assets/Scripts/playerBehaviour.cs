@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class PlayerBehaviour : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerBehaviour : MonoBehaviour
     public AudioSource audioSourceHit;
     [SerializeField] AudioSource playerLose;
     public Enemy enemy;
+    [SerializeField] Image _Lose;
 
     private void Start()
     {
@@ -83,7 +85,10 @@ public class PlayerBehaviour : MonoBehaviour
                 hP_2.SetActive(false);
                 hP_3.SetActive(false);
                 playerLose.Play();
-                enemy.stageBGM.Stop();   
+                enemy.stageBGM.Stop();
+                _Lose.enabled = true;
+                Time.timeScale = 0;
+                  
             }
         }
 

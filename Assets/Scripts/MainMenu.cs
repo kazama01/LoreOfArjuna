@@ -9,9 +9,9 @@ public class MainMenu : MonoBehaviour
 
     public void ChangeScene()
     {
-        string randomString = LV[Random.Range(0, LV.Length - 1)].name;
+        //string randomString = LV[Random.Range(0, LV.Length - 1)].name;
 
-        SceneManager.LoadScene(randomString);
+        SceneManager.LoadScene(1);
     }
 
     public void QuitGame()
