@@ -20,7 +20,7 @@ public class BallBehaviour : MonoBehaviour
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();
         //_rigidbody.AddForce(ballForceUp, ForceMode2D.Impulse);
        // _rigidbody.gravityScale = 0;
-      _particleSystem = GetComponentInChildren<ParticleSystem>();
+     
 
 
     }
