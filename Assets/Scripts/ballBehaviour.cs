@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ballBehaviour : MonoBehaviour
+public class BallBehaviour : MonoBehaviour
 {
     [SerializeField] private float bounceCount;
     [SerializeField] private Rigidbody2D _rigidbody;
@@ -10,7 +10,7 @@ public class ballBehaviour : MonoBehaviour
     [SerializeField] private Vector3 ballForceUp;
     [SerializeField] private Vector3 ballForceDown;
     [SerializeField] private float increment;
-    private playerBehaviour playerBehaviour;
+    private PlayerBehaviour playerBehaviour;
     private float tes;
     
     public ParticleSystem _particleSystem;
@@ -18,7 +18,7 @@ public class ballBehaviour : MonoBehaviour
     void Start()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        _rigidbody.AddForce(ballForceUp, ForceMode2D.Impulse);
+        //_rigidbody.AddForce(ballForceUp, ForceMode2D.Impulse);
        // _rigidbody.gravityScale = 0;
       _particleSystem = GetComponentInChildren<ParticleSystem>();
 
@@ -35,8 +35,8 @@ public class ballBehaviour : MonoBehaviour
         //ballForce = _rigidbody.velocity;
         //_rigidbody.velocity = ballForce * increment;
         //ballForce = _rigidbody.velocity;
-       
 
+        totalATK = bounceCount * increment + _rigidbody.velocity.magnitude * 2.5f;
     }
 
 
@@ -45,9 +45,9 @@ public class ballBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "wall")
         {
-            increment++;
+            //increment++;
             bounceCount++;
-            totalATK += bounceCount;
+            
             _particleSystem.Play();
             //_rigidbody.AddForce(ballForce, ForceMode2D.Impulse);
             //Debug.Log(_rigidbody.velocity.magnitude);
@@ -62,12 +62,8 @@ public class ballBehaviour : MonoBehaviour
         {
             collision.gameObject.GetComponent<Enemy>().Damaged((int)totalATK);
             _rigidbody.AddForce(ballForceDown, ForceMode2D.Impulse);
-
-        }
-
-
-
-      
+            bounceCount = 1;
+        }    
     }
 }
    

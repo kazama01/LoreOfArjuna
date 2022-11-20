@@ -6,6 +6,7 @@ TagManager:
   tags:
   - wall
   - Enemy
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - 
   - Gameplay
-  - 
+  - Vignette
   - 
   - 
   - 
@@ -46,6 +47,6 @@ TagManager:
   - name: player
     uniqueID: 2970990877
     locked: 0
-  - name: New Layer
+  - name: Add
     uniqueID: 1915191603
     locked: 0

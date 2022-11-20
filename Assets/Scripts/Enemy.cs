@@ -25,6 +25,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject posTarget;
     float tempPos;
 
+    [SerializeField] private Image HPBar;
+
+    private Animator anim;
+
     enum Status
     {
         Normal,
@@ -52,6 +56,8 @@ public class Enemy : MonoBehaviour
         _shootStepCount = shootStepLimit;
 
         tempPos = posTarget.GetComponent<RectTransform>().anchoredPosition.y;
+
+        anim = gameObject.GetComponent<Animator>();
     }
 
     private void Update()
@@ -98,7 +104,7 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        if (Vector3.Distance(gameObject.transform.position, posTarget.transform.position) >= 0.5f)
+        if (Vector3.Distance(gameObject.transform.position, posTarget.transform.position) >= 0.125f)
         {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, posTarget.transform.position, movementSpeed * Time.deltaTime);
         }
@@ -170,7 +176,7 @@ public class Enemy : MonoBehaviour
             _idleTimer = 1f;
         }
 
-        Debug.Log(posTarget.transform.position);
+        //Debug.Log(posTarget.transform.position);
 
         
     }
@@ -185,5 +191,10 @@ public class Enemy : MonoBehaviour
         //Geter kanan kiri
 
         _currentHP -= inputDamage;
+
+        HPBar.fillAmount = ((100f / MaxHP) * _currentHP) / 100;
+        Debug.Log(HPBar.fillAmount);
+
+        anim.Play("EnemyDamaged");
     }    
 }

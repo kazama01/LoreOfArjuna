@@ -3,9 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class playerBehaviour : MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour
 {
-    public float healthBar = 3;
+    [SerializeField] private int MaxHP = 3;
+    [SerializeField] private int _currentHP;
+
+    [SerializeField] private GameObject hP_1;
+    [SerializeField] private GameObject hP_2;
+    [SerializeField] private GameObject hP_3;
+
+    [SerializeField] private Animator animVignette;
+    private Animator anim;
+
+
+    private void Start()
+    {
+        _currentHP = MaxHP;
+
+        anim = gameObject.GetComponent<Animator>();
+    }
+
     void OnMouseDrag()
     {
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -13,7 +30,7 @@ public class playerBehaviour : MonoBehaviour
 
         //Debug.Log(point);
 
-        if (point.y <= 9 && point.y >= 5 && point.x >= -1.8f && point.x <= 1.8f)
+        if (point.y <= 10.5f && point.y >= 5 && point.x >= -1.8f && point.x <= 1.8f)
         {
             gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, point, 0.5f);
         }
@@ -26,21 +43,49 @@ public class playerBehaviour : MonoBehaviour
         Cursor.visible = true;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponentInChildren<ParticleSystem>())
+        if (collision.gameObject.tag == "EnemyBullet")
         {
-            if (healthBar != 0)
+            animVignette.Play("Vignette");
+
+            Destroy(collision.gameObject);
+
+            _currentHP--;
+
+            if(_currentHP == 3)
             {
-                healthBar--;
+                hP_1.SetActive(true);
+                hP_2.SetActive(true);
+                hP_3.SetActive(true);
             }
-            else
+            else if (_currentHP == 2)
             {
-                Debug.Log("gameover");
+                hP_1.SetActive(true);
+                hP_2.SetActive(true);
+                hP_3.SetActive(false);
+            }
+            else if (_currentHP == 1)
+            {
+                hP_1.SetActive(true);
+                hP_2.SetActive(false);
+                hP_3.SetActive(false);
+            }
+            else if (_currentHP <= 0)
+            {
+                hP_1.SetActive(false);
+                hP_2.SetActive(false);
+                hP_3.SetActive(false);
             }
         }
 
-
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.name == "Biji")
+        {
+            anim.Play("CharAttack");
+        }
+    }
 }
