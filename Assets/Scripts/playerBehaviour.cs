@@ -15,7 +15,7 @@ public class playerBehaviour : MonoBehaviour
 
         if(point.y <= 9 && point.y >= 5 && point.x >= -1.5f && point.x <= 1.5f)
         {
-            gameObject.transform.position = point;
+            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, point, 0.5f);
         }
         
         //Cursor.visible = false;
